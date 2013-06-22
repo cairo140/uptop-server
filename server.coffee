@@ -5,7 +5,7 @@ url = require 'url'
 Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 
 THRESHOLD = 0.01
-TIMEOUT = 30000
+TIMEOUT = 20000
 
 # an array of [request,response]
 pending = []

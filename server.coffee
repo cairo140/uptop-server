@@ -5,7 +5,7 @@ url = require 'url'
 Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 
 THRESHOLD = 0.01
-TIMEOUT = 5000
+TIMEOUT = 30000
 
 # an array of [request,response]
 pending = []
@@ -26,6 +26,11 @@ server = http.createServer (request, response) ->
   latitude = parseFloat params['latitude']
   longitude = parseFloat params['longitude']
 
+  if isNaN(latitude) || isNaN(longitude)
+    response.writeHead 400, "Content-Type": "application/json"
+    response.end '{"status":"bad_request","body":{"message":"Could not parse latitude and longitude. Please send a query string like `?latitude=12.345&longitude=67.890`."}}' + "\n"
+    return
+
   console.log 'Request received from (' + latitude + ', ' + longitude + ')'
 
   if found = pluckPending latitude, longitude
@@ -42,7 +47,7 @@ server = http.createServer (request, response) ->
     timeoutId = setTimeout ( ->
       console.log('No match found. Removing request from (' + latitude + ', ' + longitude + ')')
       pending.remove pendingEl
-      response.writeHead 200, "Content-Type": "application/json"
+      response.writeHead 404, "Content-Type": "application/json"
       response.end '{"status":"not_found","body":{"uptop":false}}' + "\n"
     ), TIMEOUT
     pendingEl.push timeoutId

@@ -16,7 +16,7 @@ If there is someone to high five, the server will respond with something like th
 
     {"status":"success","body":{"uptop":true}}
 
-If there is nobody to high five, the server will respond with something like this:
+If there is nobody to high five, the server will respond with HTTP status code 404 and something like this:
 
     {"status":"not_found","body":{"uptop":false}}
 

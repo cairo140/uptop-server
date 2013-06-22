@@ -1,7 +1,7 @@
 uptop-server
 ============
 
-A server to find people to high five.
+A server to find people to high five. Send a request with your latitude and longitude, and we'll tell you if there's someone nearby to high five. If there is, raise you hand and start looking around!
 
 Usage
 -----

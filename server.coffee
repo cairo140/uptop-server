@@ -28,7 +28,7 @@ server = http.createServer (request, response) ->
 
   if isNaN(latitude) || isNaN(longitude)
     response.writeHead 400, "Content-Type": "application/json"
-    response.end '{"status":"bad_request","body":{"message":"Could not parse latitude and longitude. Please send a query string like `?latitude=12.345&longitude=67.890`."}}' + "\n"
+    response.end '{"status":"bad_request","body":{"message":"Could not parse latitude and longitude. Please send a query string like `?latitude=12.345&longitude=67.890`. Full usage notes at https://github.com/cairo140/uptop-server"}}' + "\n"
     return
 
   console.log 'Request received from (' + latitude + ', ' + longitude + ')'

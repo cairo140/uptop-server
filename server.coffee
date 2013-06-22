@@ -12,9 +12,10 @@ pending = []
 pluckPending = (latitude, longitude) ->
   for rr in pending
     req = rr[0]
-    adlat = abs(latitude - req.latitude)
-    adlng = abs(longitude - req.longitude)
+    adlat = Math.abs(latitude - req.latitude)
+    adlng = Math.abs(longitude - req.longitude)
     if adlat + adlng < THRESHOLD
+      clearTimeout rr[2]
       pending.remove(rr)
       return rr
   return null
@@ -38,12 +39,13 @@ server = http.createServer (request, response) ->
     request.latitude = latitude
     request.longitude = longitude
     pendingEl = [request, response]
-    setTimeout ( ->
+    timeoutId = setTimeout ( ->
       console.log('No match found. Removing request from (' + latitude + ', ' + longitude + ')')
       pending.remove pendingEl
       response.writeHead 200, "Content-Type": "application/json"
       response.end '{"status":"not_found","body":{"uptop":false}}' + "\n"
     ), TIMEOUT
+    pendingEl.push timeoutId
     pending.push(pendingEl)
 
 port = process.env.PORT || 5000

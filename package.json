@@ -1,6 +1,10 @@
 {
   "name": "uptop-server",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cairo140/uptop-server.git"
+  },
   "dependencies": {
     "coffee-script": "> 1.0.0"
   },
